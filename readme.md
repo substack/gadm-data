@@ -1,60 +1,52 @@
 # gadm-data
 
 split up gadm data features into separate geojson files
-based on their admin code hierarchy
+based on the hash of the UID
 
 ``` sh
 curl -O http://biogeo.ucdavis.edu/data/gadm2.8/gadm28.shp.zip
 mkdir gadm
 unzip gadm28.shp.zip -d gadm-shp
 ogr2ogr -f GeoJSON gadm.json gadm-shp/gadm28.shp -lco RFC7946=YES
-bin/json-to-files.js -d gadm < gadm.json
+bin/json-to-files.js -o gadm < gadm.json
 ```
 
 Now you should have a directory structure like this:
 
 ```
-1	  100.json  101       102      103	 104	   105	     106
-107	  108	    109       10.json  11	 110	   111	     112
-113	  114	    115       116      117	 118	   119.json  12
-120	  121	    122       123      124	 125	   126	     127
-128	  129	    13	      130      131	 132	   133	     134
-135	  136	    137.json  138      139.json  140.json  141	     142
-143	  144	    145       146      147	 148.json  149	     14.json
-15	  150	    151       152      153	 154	   155	     156
-157	  158	    159       16       160	 161	   162	     163
-164.json  165.json  166       167      168	 169	   17	     170
-171	  172	    173       174      175	 176.json  177	     178
-179	  18	    180.json  181      182	 183	   184	     185
-186	  187	    188       189      19	 190.json  191.json  192
-193	  194	    195       196      197	 198	   199	     2
-20	  200	    201       202      203	 204	   205	     206.json
-207	  208	    209       21       210	 211	   212.json  213
-214	  215	    216.json  217      218	 219	   22	     220
-221	  222	    223       224      225	 226	   227	     228
-229	  23	    230       231      232	 233	   234	     235
-236	  237	    238       239      24	 240	   241	     242
-243	  244	    245       246      247	 248.json  249	     25
-250	  251	    252       253      254	 255	   256	     26
-27	  28	    29	      3        30	 31	   32.json   33
-34.json   35	    36	      37       38	 39	   4	     40
-41	  42	    43	      44.json  45	 46	   47	     48
-49	  5	    50.json   51.json  52.json	 53	   54	     55.json
-56	  57	    58	      59       6	 60.json   61	     62
-63	  64	    65	      66       67	 68	   69	     7
-70	  71	    72	      73       74	 75.json   76	     77
-78	  79	    8	      80       81	 82	   83	     84
-85	  86	    87	      88.json  89	 90	   91	     92
-93	  94	    95	      96       97	 98	   99	     9.json
-```
-
-with many files:
-
-```
-$ find|wc -l
-294301
-$ du -sh
-3.9G	.
+$ ls
+00/  0e/  1c/  2a/  38/  46/  54/  62/  70/  7e/  8c/  9a/  a8/  b6/  c4/  d2/
+e0/  ee/  fc/
+01/  0f/  1d/  2b/  39/  47/  55/  63/  71/  7f/  8d/  9b/  a9/  b7/  c5/  d3/
+e1/  ef/  fd/
+02/  10/  1e/  2c/  3a/  48/  56/  64/  72/  80/  8e/  9c/  aa/  b8/  c6/  d4/
+e2/  f0/  fe/
+03/  11/  1f/  2d/  3b/  49/  57/  65/  73/  81/  8f/  9d/  ab/  b9/  c7/  d5/
+e3/  f1/  ff/
+04/  12/  20/  2e/  3c/  4a/  58/  66/  74/  82/  90/  9e/  ac/  ba/  c8/  d6/
+e4/  f2/
+05/  13/  21/  2f/  3d/  4b/  59/  67/  75/  83/  91/  9f/  ad/  bb/  c9/  d7/
+e5/  f3/
+06/  14/  22/  30/  3e/  4c/  5a/  68/  76/  84/  92/  a0/  ae/  bc/  ca/  d8/
+e6/  f4/
+07/  15/  23/  31/  3f/  4d/  5b/  69/  77/  85/  93/  a1/  af/  bd/  cb/  d9/
+e7/  f5/
+08/  16/  24/  32/  40/  4e/  5c/  6a/  78/  86/  94/  a2/  b0/  be/  cc/  da/
+e8/  f6/
+09/  17/  25/  33/  41/  4f/  5d/  6b/  79/  87/  95/  a3/  b1/  bf/  cd/  db/
+e9/  f7/
+0a/  18/  26/  34/  42/  50/  5e/  6c/  7a/  88/  96/  a4/  b2/  c0/  ce/  dc/
+ea/  f8/
+0b/  19/  27/  35/  43/  51/  5f/  6d/  7b/  89/  97/  a5/  b3/  c1/  cf/  dd/
+eb/  f9/
+0c/  1a/  28/  36/  44/  52/  60/  6e/  7c/  8a/  98/  a6/  b4/  c2/  d0/  de/
+ec/  fa/
+0d/  1b/  29/  37/  45/  53/  61/  6f/  7d/  8b/  99/  a7/  b5/  c3/  d1/  df/
+ed/  fb/
+$ ls 7f
+03/  07/  14/  35/  50/  5b/  8e/  cd/  d0/  d2/  de/
+$ ls 7f/03
+f3f2febc46f3fa832d98251b0c98f64bc19b.json
 ```
 
 This will hopefully be easier to work with than one big shapefile.
