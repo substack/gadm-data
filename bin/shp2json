@@ -1,0 +1,2 @@
+#!/bin/bash
+ogr2ogr -f GeoJSON $2 $1 -lco RFC7946=YES
